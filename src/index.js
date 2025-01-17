@@ -1,46 +1,28 @@
-import React, {useState} from 'react';
+import React, {useContext} from 'react';
 import ReactDOM from 'react-dom/client';
+import App from './use-state';
 import './index.css';
 
-const App = () => {
-  return (
-    <div>
-        <Hookswitcher />
-    </div>
-  )
+
+const MyContext = React.createContext()
+
+const App2 = () => {
+    return (
+        <MyContext.Provider value={'Hellow'}>
+            <Child />
+        </MyContext.Provider>
+    )
 }
 
-const Hookswitcher = () => {
+const Child = () => {
 
-  const [color, setColor] = useState('grey')
-  const [fontSize, setFontSize] = useState(14)
-
-  return (
-    <div style={{
-      padding: '10px',
-      backgroundColor: color,
-      fontSize: `${fontSize}px`,
-    }}>
-      Hellow World
-      <button
-        onClick={() => setColor('grey')}>
-        Dark
-      </button>
-      <button
-        onClick={() => setColor('white')}>
-        Light
-      </button>
-      <button
-        onClick={() => setFontSize((s) => s + 2)}>
-        +
-      </button>
-    </div>
-  )
+    const value = useContext(MyContext)
+    return <p>{ value }</p>
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
-
+    <React.StrictMode>
+        <App />
+        <App2 />
+    </React.StrictMode>
+  );
